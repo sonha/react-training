@@ -3,12 +3,17 @@
  */
 import React, { Component } from 'react';
 import Comment from './Comment';
+import CommentForm from './CommentForm';
 
 class CommentBox extends Component {
     constructor() {
         super();
         this.state = {
-            showComments : false
+            showComments : false,
+            comments: [
+                { id: 1, author: 'Morgan McCircuit', body: 'Great picture!' },
+                { id: 2, author: 'Bending Bender', body: 'Excellent stuff' }
+            ]
         };
     }
     _getComments() {
@@ -17,7 +22,7 @@ class CommentBox extends Component {
             { id: 2, author: 'Bending Bender', body: 'Excellent stuff' }
         ];
 
-        return commentList.map((comment) => {
+        return  this.state.comments.map((comment) => {
             return (<Comment author={comment.author} body={comment.body} key={comment.id} />);
         });
     }
@@ -38,6 +43,16 @@ class CommentBox extends Component {
         });
     }
 
+    _addComment(author, body) {
+        const comment = {
+            id: this.state.comments.length + 1,
+            author,
+            body
+        };
+
+        this.setState({comments: this.state.comments.concat([comment])});
+    }
+
     render() {
         const comments = this._getComments();
         let commentNodes;
@@ -49,6 +64,7 @@ class CommentBox extends Component {
         }
         return (
             <div className="comment-box">
+                <CommentForm addComment={this._addComment.bind(this)}/>
                 <h3>Comments</h3>
                 <button onClick={this._handleClick.bind(this)}>{buttonText}</button>
                 <h4 className="comment-count">{this._getCommentTitle(comments.length)}</h4>
