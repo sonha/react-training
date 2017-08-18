@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './style.css';
 class Product extends Component {
-    generateVoteCount() {
-        return Math.floor((Math.random() * 50) + 15);
-    }
+
     render() {
         return (
             <div className="item">
@@ -15,7 +13,7 @@ class Product extends Component {
                     <div className="header">
                         <a>
                             <i className="large caret up icon"></i>
-                            {this.generateVoteCount()}
+                            {this.props.votes}
                         </a>
                     </div>
                     <div className="description">
